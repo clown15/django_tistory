@@ -10,4 +10,10 @@ def signup(request):
             user = user_form.save(commit=False)
             user.set_password(user_form.cleaned_data['password'])
             user.save()
-            return request(request,)
+            
+            return request(request,'user/signin.html',{'user':user})
+
+    else:
+        user_form = SignUpForm()
+
+    return render(request,'user/signup.html',{'user_form':user_form})
