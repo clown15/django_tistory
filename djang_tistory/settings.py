@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-AUTH_USER_MODEL = 'users.User'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,3 +124,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Use Custom User
+AUTH_USER_MODEL = 'users.User'
+
+# 아래 로그인, 로그아웃 변수는 꼭 세팅해야함
+# 로그인, 로그아웃이 실행되면 이동할 url
+LOGIN_REDIRECT_URL = '/blogs/post'
+LOGOUT_REDIRECT_URL = '/blogs/post'
