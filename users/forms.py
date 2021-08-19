@@ -3,12 +3,13 @@ from .models import User
 
 class SignUpForm(forms.ModelForm):
     # HTML에서 input type을 설정하기 위해 widget사용
-    password = CharField(label="비밀번호", widget=forms.PasswordInput)
-    confirm_password = CharField(label="비밀번호 확인", widget=forms.PasswordInput)
+    password = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label="비밀번호 확인", widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ['username','name','gender','email']
+        # fields = ['username', 'first_name', 'last_name', 'gender', 'email']
+        fields = ['username', 'gender', 'email']
 
     def clean_confirm_password(self):
         cd = self.cleaned_data

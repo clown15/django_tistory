@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser,BaseUserManager
 # Create your models here.
 
-class UserManaget(BaseUserManager):
+GENDER_CHOICES = (
+    (0, 'Male'),
+    (1, 'Female'),
+    (2, 'Not to disclose')
+)
+
+class UserManager(BaseUserManager):
     # 함수명에 _를 사용항으로서 이 class안에서만 사용하겠다는 것을 명시적으로 표시한거
     def _create_user(self, email, username, password, gender=2, **extra_fields):
         """
@@ -35,11 +41,13 @@ class UserManaget(BaseUserManager):
 
 
 class User(AbstractUser):
-    email = models.EmailField(verbose_name='email', max_length=256, uniqe=True)
+    email = models.EmailField(verbose_name='email', max_length=256, unique=True)
     username = models.CharField(max_length=32)
+    gender = models.SmallIntegerField(choices=GENDER_CHOICES)
 
+    objects = UserManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = []
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return "<%d %s>" % (self.pk,self.email)

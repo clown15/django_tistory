@@ -11,9 +11,9 @@ def signup(request):
             user.set_password(user_form.cleaned_data['password'])
             user.save()
             
-            return request(request,'user/signin.html',{'user':user})
+            return request(request,'registration/signin.html',{'user':user})
 
     else:
         user_form = SignUpForm()
 
-    return render(request,'user/signup.html',{'user_form':user_form})
+    return render(request,'registration/signup.html',{'user_form':user_form})
