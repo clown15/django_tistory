@@ -46,7 +46,9 @@ class User(AbstractUser):
     gender = models.SmallIntegerField(choices=GENDER_CHOICES)
 
     objects = UserManager()
+    # 고유 식별자로 사용되는 사용자 모델의 필드 이름을 설명하는 문자열입니다.
     USERNAME_FIELD = 'email'
+    # createsuperuser관리 명령을 통해 사용자를 생성할 때 묻는 필드 이름 목록입니다 .
     REQUIRED_FIELDS = []
 
     def __str__(self):
