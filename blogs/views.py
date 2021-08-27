@@ -55,5 +55,4 @@ def comment_write(request):
             comment = Comment.objects.create(user=request.user, post_id=int(post), content=content)
 
     # post_detail/post_id로 리턴한다
-    # return redirect(reverse('post_detail', kwargs={'post_id': post}))
-    return render(request, 'blogs/post_detail.html', {'user':request.user, 'errors':errors} )
+    return redirect(reverse('post_detail', kwargs={'post_id': post}))
