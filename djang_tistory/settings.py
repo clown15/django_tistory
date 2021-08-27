@@ -145,5 +145,5 @@ AUTH_USER_MODEL = 'users.User'
 
 # 아래 로그인, 로그아웃 변수는 꼭 세팅해야함
 # 로그인, 로그아웃이 실행되면 이동할 url
-LOGIN_REDIRECT_URL = '/post_list'
+LOGIN_REDIRECT_URL = '/post/list'
 LOGOUT_REDIRECT_URL = '/accounts/login'
