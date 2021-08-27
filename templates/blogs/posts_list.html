@@ -1,20 +1,23 @@
 {% extends "blogs/_base.html" %}
 {% block content %}
-    {% for post in posts %}
+    <div class="container">
         <!-- Main Content-->
-        <div class="container">
-            <div class="row">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <a href="{% url 'post_write' %}" class="btn btn-primary text-uppercase float-right">글쓰기</a>
+            </div>
+            {% for post in posts %}
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <!-- <a href="post.html"> -->
+                        <a href="/post/{{ post.id }}">
                             <h2 class="post-title">
                                 {{ post.title }}
                             </h2>
                             <h3 class="post-subtitle">
                                 {{ post.content }}
                             </h3>
-                        <!-- </a> -->
+                        </a>
                         <p class="post-meta">
                             Posted by
                             <a href="#!">{{ post.user }}</a>
@@ -24,7 +27,8 @@
                     <!-- Divider-->
                     <hr class="my-4" />
                 </div>
-            </div>
+            
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

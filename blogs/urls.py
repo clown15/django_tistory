@@ -1,8 +1,10 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 
-from .views import post_list
+from . import views
 
 urlpatterns = [
-    path('post_list/', post_list, name='post_list'),
+    path('post/list/', views.post_list, name='post_list'),
+    path('post/<int:post_id>/', views.post_detail, name='post_detail'),
+    path('post/write/', views.post_write, name='post_write'),
 ]

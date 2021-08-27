@@ -133,10 +133,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
 
+# 파일 저장할 위치 설정
+# 각 media 파일에 관한 URL prefix
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 업로드된 파일을 저장할 디렉토리 경로
+MEDIA_URL = '/media/'
+
+
 # Use Custom User
 AUTH_USER_MODEL = 'users.User'
 
 # 아래 로그인, 로그아웃 변수는 꼭 세팅해야함
 # 로그인, 로그아웃이 실행되면 이동할 url
-LOGIN_REDIRECT_URL = '/blogs/post'
-LOGOUT_REDIRECT_URL = '/blogs/post'
+LOGIN_REDIRECT_URL = '/post_list'
+LOGOUT_REDIRECT_URL = '/accounts/login'

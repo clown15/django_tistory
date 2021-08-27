@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,3 +25,6 @@ urlpatterns = [
     path('',include('blogs.urls')),
     path('accounts/',include('django.contrib.auth.urls')),
 ]
+# web에서 media폴더에 접근해 파일을 가져가기 위함
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
