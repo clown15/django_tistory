@@ -1,4 +1,25 @@
 {% extends "blogs/_base.html" %}
+{% block head %}
+<script>
+  $(document).ready(function() {
+    $("#like_section").click(function() {
+      var pk='{{ post.id }}'
+      $.ajax({
+        type: "POST",
+        url: "{% url 'post_like' %}",
+        data: {"post_id":pk, "csrfmiddlewaretoken":'{{ csrf_token }}'},
+        // dataType: "json",
+        success:function(res) {
+          $("#like_section").load(window.location.href+" #like_section");
+        },
+        error:function(res,e) {
+          console.log(res);
+        },
+      });
+    });
+  });
+</script>
+{% endblock %}
 {% block content %}
   <div class="container">
     <div class="mb-5">
@@ -10,24 +31,33 @@
           <img src="{{ post.image.url }}" class="img-fluid">
         {% endif %}
         <p>{{ post.content }}</p>
-        <a href="{% url 'post_list' %}" class="btn btn-primary text-uppercase float-right">글목록</a>
+        <span id="like_section">
+          {% include 'blogs/like_section.html' %}
+        </span>
+        <a href="{% url 'post_list' %}" class="btn btn-primary float-right">글목록</a>
       </div>
     </div>
     <div class="mb-5">
       <div class="card bg-light col-lg-8 col-md-10 mx-auto">
         <div class="card-body">
           <!-- Comment form-->
-          <form class="mb-4" method="POST" action="{% url 'comment_write' %}">
-            {% csrf_token %}
-            <input type="hidden" value="{{ post.id }}" name="post_id"/>
-            <textarea class="form-control mb-2" rows="5" placeholder="댓글을 입력하세요." name="content"></textarea>
-            <button type="submit" class="btn btn-outline-primary btn-sm">등록</button>
-          </form>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ request.user }}</li>
+            <li class="list-group-item">
+              <form class="mb-4" method="POST" action="{% url 'comment_write' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{ post.id }}" name="post_id"/>
+                <textarea class="form-control mb-2" rows="5" placeholder="댓글을 입력하세요." name="content"></textarea>
+                <button type="submit" class="btn btn-outline-primary btn-sm">등록</button>
+              </form>
+            </li>
+          </ul>
+          
           
           <!-- Comment with nested comments-->
+          {% for comment in comments %}
           <div class="d-flex mb-4">
             <!-- Parent comment-->
-            {% for comment in comments %}
             <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
             <div class="ms-3">
               <div class="fw-bold"></div>
@@ -42,8 +72,8 @@
                 </div>
               </div> -->
             </div>
-            {% endfor %}
           </div>
+          {% endfor %}
         </div>
       </div>
     </div>

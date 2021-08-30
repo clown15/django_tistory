@@ -5,24 +5,25 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script>
-    // $(document).ready(function() {
-    //     $('#content').summernote({
-    //         tabsize: 2,
-    //         height: 300,
-    //         minHeight: null,             // set minimum height of editor
-    //         maxHeight: null,             // set maximum height of editor
-    //         focus: true,
-    //         toolbar: [
-    //             ['style', ['style']],
-    //             ['font', ['bold', 'underline', 'clear']],
-    //             ['color', ['color']],
-    //             ['para', ['ul', 'ol', 'paragraph']],
-    //             ['table', ['table']],
-    //             ['insert', ['link', 'picture', 'video']],
-    //             ['view', ['fullscreen', 'codeview', 'help']]
-    //         ]
-    //         });
-    // });  
+  $(document).ready(function() {
+    $('#content').summernote({
+      placeholder: '내용을 입력해주세요.',
+      height: 500,
+      minHeight: 500,
+      maxHeight: 500,
+      lang: 'ko-KR',
+
+      toolbar: [
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'help']]
+      ]
+    });
+    $('p').css('margin-bottom','0')
+    $('.note-resizebar').css('display','none');
+  });  
 </script>
 {% endblock %}
 {% block content %}
@@ -47,14 +48,14 @@
               {% if 'content' in errors %}
                 <br/><span style="color: red">{{ errors.content }}</span>
               {% endif %}
-              <input type="textarea" class="form-control" name="content" placeholder="내용">
+              <input type="textarea" id="content" class="form-control" name="content" placeholder="내용">
             </div>
             <div class="form-group">
                 <label for="image">사진 첨부</label><br/>
                 <input type="file" class="form-control-file" name="image">
             </div>
             <button type="submit" class="btn btn-primary text-uppercase float-right">등록</button>
-          </form>
+        </form>
       </div>
     </div>
 </div>

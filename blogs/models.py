@@ -9,10 +9,14 @@ class Post(BaseModel):
     title = models.CharField(max_length=255, blank=False)
     content = models.TextField()
     image = models.ImageField(blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     # admin페이지에서 어떻게 보여줄지
     def __str__(self):
         return "%s" % (self.title)
+
+    def total_likes(self):
+        return self.likes.count()
 
 class Comment(BaseModel):
     # user 와 post의 경우 django에서 자동으로 _id를 추가해 columm을 생성한다.

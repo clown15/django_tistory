@@ -52,4 +52,5 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return "<%d %s>" % (self.pk,self.email)
+        # return "<%d %s>" % (self.pk,self.email)
+        return "%s" % (self.email)
