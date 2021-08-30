@@ -9,6 +9,8 @@ class Post(BaseModel):
     title = models.CharField(max_length=255, blank=False)
     content = models.TextField()
     image = models.ImageField(blank=True, null=True)
+    # https://velog.io/@hj8853/Django-ManyToMany-relatedname
+    # related_name에 관한 설명으로 likes에 접근시 related_name으로 접근 가능하다.
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     # admin페이지에서 어떻게 보여줄지
