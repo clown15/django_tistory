@@ -1,4 +1,5 @@
 {% extends "blogs/_base.html" %}
+{% load social_share %}
 {% block head %}
 <script>
   $(document).ready(function() {
@@ -31,10 +32,24 @@
           <img src="{{ post.image.url }}" class="img-fluid">
         {% endif %}
         <p>{{ post.content | safe }}</p>
-        <span id="like_section">
+        <span id="like_section" class="btn-group btn-group-sm">
           {% include 'blogs/like_section.html' %}
+          <button class="btn btn-info">
+            {% post_to_twitter "새로운 글: {{ post.title }} 등록되었습니다." object_or_url "Twitter" %}
+          </button>
+          <button class="btn btn-info">
+            {% post_to_facebook post.get_absolute_url "Facebook" %}
+          </button>
+          <button class="btn btn-info">
+            {% send_email "{{ post.title }} 읽어보세요~~" post.get_absolute_url "email" %}
+          </button>
         </span>
         <a href="{% url 'post_list' %}" class="btn btn-primary float-right">글목록</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        
       </div>
     </div>
     <div class="mb-5">
@@ -51,9 +66,7 @@
                 <button type="submit" class="btn btn-outline-primary btn-sm">등록</button>
               </form>
             </li>
-          </ul>
-          
-          
+          </ul> 
           <!-- Comment with nested comments-->
           {% for comment in comments %}
           <div class="d-flex mb-4">
