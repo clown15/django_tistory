@@ -6,24 +6,29 @@
 
 <script>
   $(document).ready(function() {
-    $('#content').summernote({
+    $('#summernote').summernote({
       placeholder: '내용을 입력해주세요.',
       height: 500,
       minHeight: 500,
       maxHeight: 500,
       lang: 'ko-KR',
-
       toolbar: [
-      ['font', ['bold', 'underline', 'clear']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['insert', ['link', 'picture', 'video']],
-      ['view', ['fullscreen', 'help']]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']]
       ]
     });
     $('p').css('margin-bottom','0')
     $('.note-resizebar').css('display','none');
-  });  
+  });
+  function postForm(event) {
+    $('#content').val($('#summernote').summernote('code'));
+    alert($('#content.val()'));
+  }
+
 </script>
 {% endblock %}
 {% block content %}
@@ -34,7 +39,7 @@
         <h1>글쓰기</h1>
         <hr>
         <!-- enctype이 있어야 파일이 넘어간다 -->
-        <form method="POST" action="{% url 'post_write' %}" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'post_write' %}" enctype="multipart/form-data" onsubmit="postForm()">
             {% csrf_token %}
             <div class="form-group">
               <label for="title">제목</label>
@@ -48,7 +53,8 @@
               {% if 'content' in errors %}
                 <br/><span style="color: red">{{ errors.content }}</span>
               {% endif %}
-              <input type="textarea" id="content" class="form-control" name="content" placeholder="내용">
+              <input type="textarea" id="content" class="form-control" name="content" placeholder="내용" style="display: none;">
+              <div id="summernote" ></div>
             </div>
             <div class="form-group">
                 <label for="image">사진 첨부</label><br/>

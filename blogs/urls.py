@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     # path(접속할 url, 연결할 view, url이름)
+    path('',views.post_list, name='home'),
     path('post/list/', views.post_list, name='post_list'),
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
     path('post/write/', views.post_write, name='post_write'),

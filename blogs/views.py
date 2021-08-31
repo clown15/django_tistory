@@ -25,6 +25,7 @@ def post_detail(request,post_id):
 @login_required
 def post_write(request):
     errors = {}
+    print(request.POST)
     if request.method == "POST":
         title = request.POST.get('title','').strip()
         content = request.POST.get('content','').strip()
