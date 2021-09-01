@@ -46,6 +46,7 @@ INSTALLED_APPS += [
     'blogs',
     'helpers',
     'django_social_share',
+    'taggit',
 ]
 
 MIDDLEWARE = [
