@@ -1,4 +1,6 @@
 import os
+import json
+from django.core.exceptions import ImproperlyConfigured
 """
 Django settings for djang_tistory project.
 
@@ -22,7 +24,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'okm0#q0978*p=w=hve^g5$z56hlb2qh5j4je2o2abu(ntq+9jx'
+secret_file = os.path.join(BASE_DIR,'secrets.json')
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        print(secrets[setting])
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_secret("SECRET_KEY")
+# SECRET_KEY = 'okm0#q0978*p=w=hve^g5$z56hlb2qh5j4je2o2abu(ntq+9jx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
