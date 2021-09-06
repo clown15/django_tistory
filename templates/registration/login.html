@@ -7,10 +7,11 @@
   <h1>Login</h1>
   <hr>
   <form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  <input type="hidden" name="next" value="" />
-  {{ form.as_p }}
-  <button class="btn btn-primary" type="submit">로그인</button>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="" />
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">로그인</button>
+    <a class="btn btn-primary" href="{% url 'signup' %}">회원가입</a>
   </form>
 </div>
 

@@ -25,7 +25,7 @@ def post_detail(request,post_id):
 @login_required
 def post_write(request):
     errors = {}
-    print(request.POST)
+
     if request.method == "POST":
         title = request.POST.get('title','').strip()
         content = request.POST.get('content','').strip()
@@ -45,6 +45,32 @@ def post_write(request):
         return render(request, 'blogs/post_write.html', {'user':request.user, 'errors':errors})
     
     return render(request, 'blogs/post_write.html')
+
+@login_required
+def post_update(request,post_id):
+    errors = {}
+
+    # post = Post.objects.filter(id=post_id, user=request.user)
+    post = get_object_or_404(Post,pk=post_id, user=request.user)
+    if request.method == "POST":
+        title = request.POST.get('title','').strip()
+        content = request.POST.get('content','').strip()
+        image = request.FILES.get('image')
+
+        if not title:
+            errors['title'] = '제목을 입력하세요.'
+        if not content:
+            errors['content'] = '내용을 입력하세요.'
+        if not errors:
+            post.title = title
+            post.content = content
+            post.image = image
+            post.save()
+
+            return redirect(reverse('post_detail', kwargs={'post_id': post_id}))
+        
+        return render(request, 'blogs/post_update.html', {'post':post, 'errors':errors})
+    return render(request,'blogs/post_update.html',{'post':post})
 
 @login_required
 def comment_write(request):
@@ -67,7 +93,6 @@ def comment_write(request):
 @login_required
 @require_POST
 def post_like(request):
-    print(request)
     post = get_object_or_404(Post,id=request.POST.get('post_id'))
     is_liked = post.likes.filter(id=request.user.id).exists()
 

@@ -1,0 +1,69 @@
+{% extends "blogs/_base.html" %}
+{% block head %}
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#summernote').summernote({
+      placeholder: '내용을 입력해주세요.',
+      height: 500,
+      minHeight: 500,
+      maxHeight: 500,
+      lang: 'ko-KR',
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']]
+      ]
+    });
+    $('p').css('margin-bottom','0')
+    $('.note-resizebar').css('display','none');
+    $('#summernote').summernote('code', '{{ post.content|safe }}');
+  });
+  function postForm(event) {
+    $('#content').val($('#summernote').summernote('code'));
+    alert($('#content.val()'));
+  }
+
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <!-- 글 본문 -->
+        <h1>글쓰기</h1>
+        <hr>
+        <!-- enctype이 있어야 파일이 넘어간다 -->
+        <form method="POST" action="{% url 'post_update' post_id=post.id %}" enctype="multipart/form-data" onsubmit="postForm()">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="title">제목</label>
+              {% if 'title' in errors %}
+                <br/><span style="color: red">{{ errors.title }}</span>
+              {% endif %}
+              <input type="text" class="form-control" name="title" value="{{ post.title }}">
+            </div>
+            <div class="form-group">
+              <label for="content">내용</label>
+              {% if 'content' in errors %}
+                <br/><span style="color: red">{{ errors.content }}</span>
+              {% endif %}
+              <input type="textarea" id="content" class="form-control" name="content" placeholder="내용" style="display: none;">
+              <div id="summernote" ></div>
+            </div>
+            <div class="form-group">
+                <label for="image">사진 첨부</label><br/>
+                <input type="file" class="form-control-file" name="image" value="{{ post.image }}">
+            </div>
+            <button type="submit" class="btn btn-primary text-uppercase float-right">등록</button>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock %}

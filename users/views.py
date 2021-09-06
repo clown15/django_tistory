@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from .forms import SignUpForm
 # Create your views here.
 
@@ -11,7 +11,7 @@ def signup(request):
             user.set_password(user_form.cleaned_data['password'])
             user.save()
             
-            return render(request, 'registration/login.html', {'user':user})
+            return redirect(reverse('login'))
 
     else:
         user_form = SignUpForm()
