@@ -24,10 +24,13 @@
     $('p').css('margin-bottom','0')
     $('.note-resizebar').css('display','none');
     $('#summernote').summernote('code', '{{ post.content|safe }}');
+    $("#summernote").on("summernote.enter", function(we, e) {
+      $(this).summernote("pasteHTML", "<br><br>");
+      e.preventDefault();
+    });
   });
   function postForm(event) {
     $('#content').val($('#summernote').summernote('code'));
-    alert($('#content.val()'));
   }
 
 </script>
