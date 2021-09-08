@@ -73,6 +73,14 @@ def post_update(request,post_id):
     return render(request,'blogs/post_update.html',{'post':post})
 
 @login_required
+@require_POST
+def post_delete(request,post_id):
+    post = get_object_or_404(Post,pk=post_id, user=request.user)
+
+    post.delete()    
+    return redirect(reverse('post_list'))
+
+@login_required
 def comment_write(request):
     errors = {}
     if request.method == "POST":
