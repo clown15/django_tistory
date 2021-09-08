@@ -1,15 +1,13 @@
 {% extends "blogs/_base.html" %}
 {% block head %}
 <script>
-    $("#login_required").click(function() {
-        $.confirm('안녕하세요! 빌리블입니다<br>info@billible.co.kr로 문의하시겠습니까?',{
-            em:'Billible',
-            title:'안내',
-            callEvent:function(){$.alert('감사합니다.')},
-            cancelEvent:function(){$.alert('예 궁금한건 언제든지 문의 주세요');},
-            confirmButton:"로그인"
-            cancelButton:'다음에',
-        })
+    $(document).ready(function(){
+        $("#login_required").click(function() {
+            var result = confirm('로그인이 필요합니다.');
+            if(result) { 
+                $(location).attr('href','/accounts/login/');
+            } 
+        }); 
     });
 </script>
 {% endblock %}
@@ -21,7 +19,7 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'post_write' %}" class="btn btn-primary float-right">글쓰기</a>
                 {% else %}
-                    <a href="{% url 'post_write' %}" class="btn btn-primary float-right disabled" id="login_required">글쓰기</a>
+                    <a class="btn btn-primary float-right" id="login_required">글쓰기</a>
                 {% endif %}
             </div>
             {% for post in posts %}
