@@ -1,4 +1,4 @@
-{% extends "blogs/_base.html" %}
+<!-- {% extends "blogs/_base.html" %} -->
 {% load social_share %}
 {% block head %}
 <script>
@@ -33,7 +33,8 @@
         {% ifequal post.user request.user %}
           <span class="float-right">
             <a href="{% url 'post_update' post_id=post.id %}" class="btn btn-light btn-sm">수정</a>
-            <button type="submit" class="btn btn-light btn-sm">삭제</button>
+            <!-- <button type="submit" class="btn btn-light btn-sm">삭제</button> -->
+            <a href="{% url 'post_delete' post_id=post.id %}" class="btn btn-light btn-sm">삭제</a>
           </span>
         {% endifequal %}
         <hr>
